@@ -61,7 +61,7 @@ namespace Lumen.Modules.GRDF.Business.Implementations {
 
             var meteo = await GetMeteoFromAPI(cookie, min, max, pce);
 
-            context.GRDF.AddRange(data.releves.Select((r) => {
+            context.GRDF.AddRange(data.releves.Where(x => meteo.ContainsKey(x.journeeGaziere)).Select((r) => {
                 return new GRDFPointInTime {
                     DateDebut = r.dateDebutReleve.ToUniversalTime(),
                     DateFin = r.dateFinReleve.ToUniversalTime(),
